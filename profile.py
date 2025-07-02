@@ -23,13 +23,13 @@ request = portal.context.makeRequestRSpec()
 
 # Parameters
 portal.context.defineParameter(
-    "BROKER_COUNT", "Number of Kafka Brokers", portal.ParameterType.INTEGER, 5
+    "BROKER_COUNT", "Number of Kafka Brokers", portal.ParameterType.INTEGER, 3
 )
 portal.context.defineParameter(
     "PRODUCER_COUNT", "Number of Kafka Producers", portal.ParameterType.INTEGER, 1
 )
 portal.context.defineParameter(
-    "CONSUMER_COUNT", "Number of Kafka Consumers", portal.ParameterType.INTEGER, 1
+    "CONSUMER_COUNT", "Number of Kafka Consumers", portal.ParameterType.INTEGER, 0
 )
 params = portal.context.bindParameters()
 
@@ -40,6 +40,11 @@ if params.PRODUCER_COUNT < 0:
     portal.context.reportError("Producer count cannot be negative", ["PRODUCER_COUNT"])
 if params.CONSUMER_COUNT < 0:
     portal.context.reportError("Consumer count cannot be negative", ["CONSUMER_COUNT"])
+if params.PRODUCER_COUNT + params.CONSUMER_COUNT == 0:
+    portal.context.reportError(
+        "Can't run an experiment with no producers, nor consumers",
+        ["PRODUCER_COUNT", "CONSUMER_COUNT"],
+    )
 portal.context.verifyParameters()
 
 
@@ -59,20 +64,22 @@ def create_node(role, index, lan):
 
 # LANs
 broker_lan = request.LAN("broker-lan")
-producer_lan = request.LAN("producer-lan")
-consumer_lan = request.LAN("consumer-lan")
 
 # Brokers
 for i in range(params.BROKER_COUNT):
     create_node("broker", i + 1, broker_lan)
 
 # Producers
-for i in range(params.PRODUCER_COUNT):
-    create_node("producer", i + 1, producer_lan)
+if params.PRODUCER_COUNT > 0:
+    producer_lan = request.LAN("producer-lan")
+    for i in range(params.PRODUCER_COUNT):
+        create_node("producer", i + 1, producer_lan)
 
 # Consumers
-for i in range(params.CONSUMER_COUNT):
-    create_node("consumer", i + 1, consumer_lan)
+if params.CONSUMER_COUNT > 0:
+    consumer_lan = request.LAN("consumer-lan")
+    for i in range(params.CONSUMER_COUNT):
+        create_node("consumer", i + 1, consumer_lan)
 
 
 # Print the RSpec to the enclosing page.
