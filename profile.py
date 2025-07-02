@@ -47,9 +47,11 @@ if params.PRODUCER_COUNT + params.CONSUMER_COUNT == 0:
     )
 portal.context.verifyParameters()
 
+lan = request.LAN("lan")
+
 
 # Create a node
-def create_node(role, index, lan):
+def create_node(role, index):
     name = str(role) + "-" + str(index)
     ip = "192.168." + str(ROLE_SUBNETS[role]) + "." + str(index)
 
@@ -62,25 +64,17 @@ def create_node(role, index, lan):
     lan.addInterface(iface)
 
 
-# LANs
-broker_lan = request.LAN("broker-lan")
-
 # Brokers
 for i in range(params.BROKER_COUNT):
-    create_node("broker", i + 1, broker_lan)
+    create_node("broker", i + 1)
 
 # Producers
-if params.PRODUCER_COUNT > 0:
-    producer_lan = request.LAN("producer-lan")
-    for i in range(params.PRODUCER_COUNT):
-        create_node("producer", i + 1, producer_lan)
+for i in range(params.PRODUCER_COUNT):
+    create_node("producer", i + 1)
 
 # Consumers
-if params.CONSUMER_COUNT > 0:
-    consumer_lan = request.LAN("consumer-lan")
-    for i in range(params.CONSUMER_COUNT):
-        create_node("consumer", i + 1, consumer_lan)
-
+for i in range(params.CONSUMER_COUNT):
+    create_node("consumer", i + 1)
 
 # Print the RSpec to the enclosing page.
 portal.context.printRequestRSpec()
