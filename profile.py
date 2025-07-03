@@ -16,12 +16,20 @@ HARDWARE_TYPE = "m400"
 DISK_IMAGE_URN = (
     "urn:publicid:IDN+utah.cloudlab.us+image+isolateedinburgh-PG0:kafka-bare-metal"
 )
+DATASET_URN = "urn:publicid:IDN+utah.cloudlab.us:isolateedinburgh-pg0+imdataset+kafka-experiment-configs"
 ROLE_SUBNETS = {"broker": 1, "producer": 2, "consumer": 3}
+KAFKA_CLUSTER_ID = "imKy6K6KS-Serx1fhjChJg"
 
 # Create a Request object to start building the RSpec.
 request = portal.context.makeRequestRSpec()
 
 # Parameters
+portal.context.defineParameter(
+    "EXPERIMENT_DIR",
+    "Directory under /experiments where configs are",
+    portal.ParameterType.STRING,
+    "3_high_volume_ingest",
+)
 portal.context.defineParameter(
     "BROKER_COUNT", "Number of Kafka Brokers", portal.ParameterType.INTEGER, 3
 )
@@ -34,6 +42,10 @@ portal.context.defineParameter(
 params = portal.context.bindParameters()
 
 # Validation of parameters
+if params.EXPERIMENT_DIR == "":
+    portal.context.reportError(
+        "Specify the directory of the experiment", ["EXPERIMENT_DIR"]
+    )
 if params.BROKER_COUNT < 1:
     portal.context.reportError("There must be at least one broker", ["BROKER_COUNT"])
 if params.PRODUCER_COUNT < 0:
@@ -51,13 +63,16 @@ lan = request.LAN("lan")
 
 
 # Create a node
-def create_node(role, index):
+def create_node(role, index, experiment_dir):
     name = str(role) + "-" + str(index)
     ip = "192.168." + str(ROLE_SUBNETS[role]) + "." + str(index)
 
     node = request.RawPC(name)
     node.hardware_type = HARDWARE_TYPE
     node.disk_image = DISK_IMAGE_URN
+
+    bs = node.Blockstore("bs-" + str(role) + "-" + str(index), "/experiments")
+    bs.dataset = DATASET_URN
 
     iface = node.addInterface("if-" + str(role) + "-" + str(index))
     iface.addAddress(rspec.IPv4Address(ip, "255.255.255.0"))
@@ -66,15 +81,15 @@ def create_node(role, index):
 
 # Brokers
 for i in range(params.BROKER_COUNT):
-    create_node("broker", i + 1)
+    create_node("broker", i + 1, params.EXPERIMENT_DIR)
 
 # Producers
 for i in range(params.PRODUCER_COUNT):
-    create_node("producer", i + 1)
+    create_node("producer", i + 1, params.EXPERIMENT_DIR)
 
 # Consumers
 for i in range(params.CONSUMER_COUNT):
-    create_node("consumer", i + 1)
+    create_node("consumer", i + 1, params.EXPERIMENT_DIR)
 
 # Print the RSpec to the enclosing page.
 portal.context.printRequestRSpec()
