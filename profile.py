@@ -54,6 +54,7 @@ portal.context.defineParameter(
     defaultValue="urn:publicid:IDN+utah.cloudlab.us+image+isolateedinburgh-PG0:kafka-bare-metal",
     legalValues=[
         "urn:publicid:IDN+utah.cloudlab.us+image+isolateedinburgh-PG0:kafka-bare-metal",
+        "urn:publicid:IDN+utah.cloudlab.us+image+isolateedinburgh-PG0:c6620-kafka-bare-metal",
         "urn:publicid:IDN+clemson.cloudlab.us+image+isolateedinburgh-PG0:c6420-kafka-bare-metal",
     ],
 )
@@ -83,7 +84,7 @@ lan = request.LAN("lan")
 # Create a node
 def create_node(role, index):
     name = str(role) + "-" + str(index)
-    ip = "192.168." + str(ROLE_SUBNETS[role]) + "." + str(index)
+    ip = "192.168.0." + str(100 * ROLE_SUBNETS[role] + index)
 
     node = request.RawPC(name)
     node.hardware_type = params.HARDWARE_TYPE
