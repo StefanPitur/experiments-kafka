@@ -5,4 +5,13 @@ scrape_configs:
   - job_name: 'kafka-brokers-monitoring'
     static_configs:
       - targets:
-          - '128.110.216.228:7071'
+          - '128.110.220.18:7071'
+          # - '128.110.220.123:7071'
+          # - '128.110.220.90:7071'
+
+  - job_name: 'kafka-producers-monitoring'
+    static_configs:
+      - targets:
+          - '128.110.220.21:7071'
+          # - '128.110.220.94:7071'
+          # - '128.110.220.79:7071'

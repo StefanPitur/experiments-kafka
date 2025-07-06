@@ -133,6 +133,18 @@ EOF""",
         )
     )
 
+    node.addService(
+        rspec.Execute(
+            shell="bash",
+            command="""
+sudo lvcreate -l 100%FREE -n kafka-data emulab &&\
+sudo mkfs.ext4 /dev/emulab/kafka-data &&\
+sudo mkdir -p /mnt/kafka-data &&\
+sudo mount /dev/emulab/kafka-data /mnt/kafka-data
+""",
+        )
+    )
+
 
 # Brokers
 for i in range(params.BROKER_COUNT):
