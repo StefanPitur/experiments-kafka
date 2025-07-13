@@ -1,36 +1,59 @@
 """
-This CloudLab profile sets up a configurable Apache Kafka cluster with optional producers and consumers.
-It clones a custom Kafka fork from GitHub and prepares each node with monitoring and experimental datasets.
+This CloudLab profile provisions a configurable Apache Kafka cluster with optional producers and consumers,
+using a custom Kafka fork along with system and JVM monitoring agents.
 
-Instructions:
+What It Sets Up:
+- A user-defined number of Kafka **brokers**, **producers**, and **consumers**.
+- All nodes run the `c6620_kafka_codebase` image on `c6620` hardware.
+- Each node mounts the `kafka-experiment-configs` dataset at `/experiments`.
+- A logical volume is created and mounted at `/mnt/kafka-data` to store Kafka logs and persistent data.
 
-- Select the desired number of brokers, producers, and consumers when instantiating the experiment.
-- Each node clones the Kafka codebase from: https://github.com/StefanPitur/kafka
-- A Prometheus JMX exporter is downloaded and configured to monitor Kafka metrics on port 7071.
-- A preloaded dataset is mounted at /experiments on every node.
-- A logical volume is created and mounted at /mnt/kafka-data for Kafka logs and data.
-- Environment variables for Kafka, Scala, and Gradle are exported via `.profile`.
+Kafka & Monitoring Environment:
+- Clones a Kafka fork from: https://github.com/StefanPitur/kafka.git -> `/users/pitur/kafka`
+- Sets up the Prometheus **JMX Exporter** for Kafka JVM metrics, listening on port **7071**
+- Appends to `.profile` the necessary environment variables:
+    - `KAFKA_CLUSTER_ID`
+    - `KAFKA_OPTS` (includes the JMX agent)
+    - Scala and Gradle paths
+- **Node Exporter v1.9.1** is downloaded and started as a background process, listening on port **9100**
+  for system-level metrics (CPU, memory, disk, etc.).
 
-Notes:
-- Default image: c6620_kafka_codebase
-- Hardware type: c6620
-- All nodes are placed on a shared LAN with role-based static IPs.
-- Kafka path: /users/pitur/kafka
-- Kafka JMX configuration: /users/pitur/kafka/kafka-jmx.yml
+Progress Tracking:
+- Execution progress is logged numerically (steps 0-7) to `/users/pitur/state.log`.
+- This helps with debugging any boot-time or provisioning failures.
 
-This profile is suitable for performance testing, instrumentation, and real-world distributed system research.
+Networking:
+- All nodes are connected to a shared LAN.
+- Role-based static IPs:
+    - Brokers: `192.168.0.1xx`
+    - Producers: `192.168.0.2xx`
+    - Consumers: `192.168.0.3xx`
+
+Parameters:
+- `BROKER_COUNT` (default: 3): Number of Kafka broker nodes
+- `PRODUCER_COUNT` (default: 1): Number of Kafka producer nodes
+- `CONSUMER_COUNT` (default: 0): Number of Kafka consumer nodes
+
+Use Cases:
+- Kafka performance & stress testing
+- Monitoring with Prometheus (JMX + Node Exporter)
+- JVM instrumentation and system resource tracking
+- Distributed systems benchmarking and protocol experimentation
 """
 
 # type: ignore
 import geni.portal as portal
 import geni.rspec.pg as rspec
 
+PWD = "/users/pitur"
 KAFKA_CLUSTER_ID = "imKy6K6KS-Serx1fhjChJg"
 KAFKA_REPO = "https://github.com/StefanPitur/kafka.git"
-KAFKA_PATH = "/users/pitur/kafka"
+KAFKA_PATH = PWD + "/kafka"
 HARDWARE_TYPE = "c6620"
 DATASET_URN = "urn:publicid:IDN+utah.cloudlab.us:isolateedinburgh-pg0+imdataset+kafka-experiment-configs"
-DISK_IMAGE_URN = "urn:publicid:IDN+utah.cloudlab.us+image+isolateedinburgh-PG0:c6620_kafka_codebase"
+DISK_IMAGE_URN = (
+    "urn:publicid:IDN+utah.cloudlab.us+image+isolateedinburgh-PG0:c6620_kafka_codebase"
+)
 ROLE_SUBNETS = {"broker": 1, "producer": 2, "consumer": 3}
 
 # Create a Request object to start building the RSpec.
@@ -79,7 +102,7 @@ def create_node(role, index):
 
     clone_kafka(node)
     setup_profile_paths(node)
-
+    start_node_exporter(node)
 
     node.addService(
         rspec.Execute(
@@ -93,18 +116,21 @@ sudo mount /dev/emulab/kafka-data /mnt/kafka-data
         )
     )
 
+
 def clone_kafka(node):
     node.addService(
         rspec.Execute(
             shell="bash",
-            command="""git clone {}""".format(KAFKA_REPO)
+            command="""sudo -u pitur git clone {} {}""".format(KAFKA_REPO, KAFKA_PATH),
         )
     )
 
     node.addService(
         rspec.Execute(
             shell="bash",
-            command="sudo wget https://github.com/prometheus/jmx_exporter/releases/download/1.3.0/jmx_prometheus_javaagent-1.3.0.jar -O {}/jmx_prometheus_javaagent.jar".format(KAFKA_PATH),
+            command="sudo wget https://github.com/prometheus/jmx_exporter/releases/download/1.3.0/jmx_prometheus_javaagent-1.3.0.jar -O {}/jmx_prometheus_javaagent.jar".format(
+                KAFKA_PATH
+            ),
         )
     )
 
@@ -115,7 +141,9 @@ def clone_kafka(node):
 startDelaySeconds: 0
 rules:
   - pattern: ".*"
-EOF""".format(KAFKA_PATH),
+EOF""".format(
+                KAFKA_PATH
+            ),
         )
     )
 
@@ -133,23 +161,40 @@ def setup_profile_paths(node):
     node.addService(
         rspec.Execute(
             shell="bash",
-            command="""echo 'export KAFKA_OPTS="-javaagent:{}/jmx_prometheus_javaagent.jar=7071:/opt/kafka/kafka-jmx.yml"' | sudo tee -a /users/pitur/.profile""".format(KAFKA_PATH),
+            command="""echo 'export KAFKA_OPTS="-javaagent:{}/jmx_prometheus_javaagent.jar=7071:{}/kafka-jmx.yml"' | sudo tee -a /users/pitur/.profile""".format(
+                KAFKA_PATH, KAFKA_PATH
+            ),
         )
     )
 
     node.addService(
         rspec.Execute(
             shell="bash",
-            command="""echo 'export PATH=$PATH:/opt/gradle/gradle-8.14.3/bin' | sudo tee -a /users/pitur/.profile"""
+            command="""echo 'export PATH=$PATH:/opt/gradle/gradle-8.14.3/bin:/opt/scala/scala-2.13.13/bin' | sudo tee -a /users/pitur/.profile""",
         )
     )
 
+
+def start_node_exporter(node):
     node.addService(
         rspec.Execute(
             shell="bash",
-            command="""echo 'export PATH=/opt/scala/scala-2.13.13/bin:$PATH' | sudo tee -a /users/pitur/.profile"""
+            command="""
+cd /{} && \
+sudo wget https://github.com/prometheus/node_exporter/releases/download/v1.9.1/node_exporter-1.9.1.linux-amd64.tar.gz && \
+sudo tar -xzf node_exporter-1.9.1.linux-amd64.tar.gz && \
+sudo rm node_exporter-1.9.1.linux-amd64.tar.gz && \
+sudo -u pitur nohup /{}/node_exporter-1.9.1.linux-amd64/node_exporter \
+  --collector.diskstats \
+  --collector.netdev \
+  --web.listen-address=":9100" \
+  > /tmp/node_exporter.log 2>&1 &
+""".format(
+                PWD, PWD
+            ),
         )
     )
+
 
 # Brokers
 for i in range(params.BROKER_COUNT):
