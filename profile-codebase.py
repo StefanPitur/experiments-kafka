@@ -100,10 +100,6 @@ def create_node(role, index):
     iface.addAddress(rspec.IPv4Address(ip, "255.255.255.0"))
     lan.addInterface(iface)
 
-    clone_kafka(node)
-    setup_profile_paths(node)
-    start_node_exporter(node)
-
     node.addService(
         rspec.Execute(
             shell="bash",
@@ -115,6 +111,10 @@ sudo mount /dev/emulab/kafka-data /mnt/kafka-data
 """,
         )
     )
+
+    clone_kafka(node)
+    setup_profile_paths(node)
+    start_node_exporter(node)
 
 
 def clone_kafka(node):
