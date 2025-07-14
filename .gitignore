@@ -1,2 +1,3 @@
 .ruff_cache/
 grafana/data/
+.DS_Store
