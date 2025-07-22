@@ -54,7 +54,7 @@ DATASET_URN = "urn:publicid:IDN+utah.cloudlab.us:isolateedinburgh-pg0+imdataset+
 DISK_IMAGE_URN = (
     "urn:publicid:IDN+utah.cloudlab.us+image+isolateedinburgh-PG0:c6620_kafka_codebase"
 )
-ROLE_SUBNETS = {"broker": 1, "producer": 2, "consumer": 3}
+ROLE_SUBNETS = {"broker": 1, "producer": 2, "consumer": 0}
 
 # Create a Request object to start building the RSpec.
 request = portal.context.makeRequestRSpec()
@@ -180,7 +180,7 @@ def start_node_exporter(node):
         rspec.Execute(
             shell="bash",
             command="""
-cd /{} && \
+cd {} && \
 sudo wget https://github.com/prometheus/node_exporter/releases/download/v1.9.1/node_exporter-1.9.1.linux-amd64.tar.gz && \
 sudo tar -xzf node_exporter-1.9.1.linux-amd64.tar.gz && \
 sudo rm node_exporter-1.9.1.linux-amd64.tar.gz && \
