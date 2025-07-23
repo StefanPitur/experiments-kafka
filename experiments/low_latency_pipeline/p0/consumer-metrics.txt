@@ -1,0 +1,125 @@
+Metric Name                                                                                                                   Value
+consumer-coordinator-metrics:assigned-partitions:{client-id=perf-consumer-client}                                           : 0.000
+consumer-coordinator-metrics:commit-latency-avg:{client-id=perf-consumer-client}                                            : NaN
+consumer-coordinator-metrics:commit-latency-max:{client-id=perf-consumer-client}                                            : NaN
+consumer-coordinator-metrics:commit-rate:{client-id=perf-consumer-client}                                                   : 0.000
+consumer-coordinator-metrics:commit-total:{client-id=perf-consumer-client}                                                  : 0.000
+consumer-coordinator-metrics:failed-rebalance-rate-per-hour:{client-id=perf-consumer-client}                                : 0.000
+consumer-coordinator-metrics:failed-rebalance-total:{client-id=perf-consumer-client}                                        : 2.000
+consumer-coordinator-metrics:heartbeat-rate:{client-id=perf-consumer-client}                                                : 0.343
+consumer-coordinator-metrics:heartbeat-response-time-max:{client-id=perf-consumer-client}                                   : 2.000
+consumer-coordinator-metrics:heartbeat-total:{client-id=perf-consumer-client}                                               : 201.000
+consumer-coordinator-metrics:join-rate:{client-id=perf-consumer-client}                                                     : 0.000
+consumer-coordinator-metrics:join-time-avg:{client-id=perf-consumer-client}                                                 : NaN
+consumer-coordinator-metrics:join-time-max:{client-id=perf-consumer-client}                                                 : NaN
+consumer-coordinator-metrics:join-total:{client-id=perf-consumer-client}                                                    : 1.000
+consumer-coordinator-metrics:last-heartbeat-seconds-ago:{client-id=perf-consumer-client}                                    : 1.000
+consumer-coordinator-metrics:last-rebalance-seconds-ago:{client-id=perf-consumer-client}                                    : 604.000
+consumer-coordinator-metrics:partition-assigned-latency-avg:{client-id=perf-consumer-client}                                : NaN
+consumer-coordinator-metrics:partition-assigned-latency-max:{client-id=perf-consumer-client}                                : NaN
+consumer-coordinator-metrics:partition-lost-latency-avg:{client-id=perf-consumer-client}                                    : NaN
+consumer-coordinator-metrics:partition-lost-latency-max:{client-id=perf-consumer-client}                                    : NaN
+consumer-coordinator-metrics:partition-revoked-latency-avg:{client-id=perf-consumer-client}                                 : 0.000
+consumer-coordinator-metrics:partition-revoked-latency-max:{client-id=perf-consumer-client}                                 : 0.000
+consumer-coordinator-metrics:rebalance-latency-avg:{client-id=perf-consumer-client}                                         : NaN
+consumer-coordinator-metrics:rebalance-latency-max:{client-id=perf-consumer-client}                                         : NaN
+consumer-coordinator-metrics:rebalance-latency-total:{client-id=perf-consumer-client}                                       : 3242.000
+consumer-coordinator-metrics:rebalance-rate-per-hour:{client-id=perf-consumer-client}                                       : 0.000
+consumer-coordinator-metrics:rebalance-total:{client-id=perf-consumer-client}                                               : 1.000
+consumer-coordinator-metrics:sync-rate:{client-id=perf-consumer-client}                                                     : 0.000
+consumer-coordinator-metrics:sync-time-avg:{client-id=perf-consumer-client}                                                 : NaN
+consumer-coordinator-metrics:sync-time-max:{client-id=perf-consumer-client}                                                 : NaN
+consumer-coordinator-metrics:sync-total:{client-id=perf-consumer-client}                                                    : 1.000
+consumer-fetch-manager-metrics:bytes-consumed-rate:{client-id=perf-consumer-client, topic=baseline-latency}                 : 8656108.517
+consumer-fetch-manager-metrics:bytes-consumed-rate:{client-id=perf-consumer-client}                                         : 8745686.434
+consumer-fetch-manager-metrics:bytes-consumed-total:{client-id=perf-consumer-client, topic=baseline-latency}                : 6252000000.000
+consumer-fetch-manager-metrics:bytes-consumed-total:{client-id=perf-consumer-client}                                        : 6252000000.000
+consumer-fetch-manager-metrics:fetch-latency-avg:{client-id=perf-consumer-client}                                           : 1.071
+consumer-fetch-manager-metrics:fetch-latency-max:{client-id=perf-consumer-client}                                           : 29.000
+consumer-fetch-manager-metrics:fetch-rate:{client-id=perf-consumer-client}                                                  : 826.528
+consumer-fetch-manager-metrics:fetch-size-avg:{client-id=perf-consumer-client, topic=baseline-latency}                      : 10732.784
+consumer-fetch-manager-metrics:fetch-size-avg:{client-id=perf-consumer-client}                                              : 10732.784
+consumer-fetch-manager-metrics:fetch-size-max:{client-id=perf-consumer-client, topic=baseline-latency}                      : 295407.000
+consumer-fetch-manager-metrics:fetch-size-max:{client-id=perf-consumer-client}                                              : 295407.000
+consumer-fetch-manager-metrics:fetch-throttle-time-avg:{client-id=perf-consumer-client}                                     : 0.000
+consumer-fetch-manager-metrics:fetch-throttle-time-max:{client-id=perf-consumer-client}                                     : 0.000
+consumer-fetch-manager-metrics:fetch-total:{client-id=perf-consumer-client}                                                 : 570559.000
+consumer-fetch-manager-metrics:preferred-read-replica:{client-id=perf-consumer-client, topic=baseline-latency, partition=0} : -1
+consumer-fetch-manager-metrics:preferred-read-replica:{client-id=perf-consumer-client, topic=baseline-latency, partition=1} : -1
+consumer-fetch-manager-metrics:preferred-read-replica:{client-id=perf-consumer-client, topic=baseline-latency, partition=2} : -1
+consumer-fetch-manager-metrics:preferred-read-replica:{client-id=perf-consumer-client, topic=baseline-latency, partition=3} : -1
+consumer-fetch-manager-metrics:preferred-read-replica:{client-id=perf-consumer-client, topic=baseline-latency, partition=4} : -1
+consumer-fetch-manager-metrics:preferred-read-replica:{client-id=perf-consumer-client, topic=baseline-latency, partition=5} : -1
+consumer-fetch-manager-metrics:preferred-read-replica:{client-id=perf-consumer-client, topic=baseline-latency, partition=6} : -1
+consumer-fetch-manager-metrics:preferred-read-replica:{client-id=perf-consumer-client, topic=baseline-latency, partition=7} : -1
+consumer-fetch-manager-metrics:preferred-read-replica:{client-id=perf-consumer-client, topic=baseline-latency, partition=8} : -1
+consumer-fetch-manager-metrics:preferred-read-replica:{client-id=perf-consumer-client, topic=baseline-latency, partition=9} : -1
+consumer-fetch-manager-metrics:records-consumed-rate:{client-id=perf-consumer-client, topic=baseline-latency}               : 16614.412
+consumer-fetch-manager-metrics:records-consumed-rate:{client-id=perf-consumer-client}                                       : 16786.346
+consumer-fetch-manager-metrics:records-consumed-total:{client-id=perf-consumer-client, topic=baseline-latency}              : 12000000.000
+consumer-fetch-manager-metrics:records-consumed-total:{client-id=perf-consumer-client}                                      : 12000000.000
+consumer-fetch-manager-metrics:records-lag-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=0}        : 0.483
+consumer-fetch-manager-metrics:records-lag-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=1}        : 0.332
+consumer-fetch-manager-metrics:records-lag-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=2}        : 0.280
+consumer-fetch-manager-metrics:records-lag-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=3}        : 0.462
+consumer-fetch-manager-metrics:records-lag-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=4}        : 0.449
+consumer-fetch-manager-metrics:records-lag-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=5}        : 0.446
+consumer-fetch-manager-metrics:records-lag-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=6}        : 0.420
+consumer-fetch-manager-metrics:records-lag-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=7}        : 0.391
+consumer-fetch-manager-metrics:records-lag-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=8}        : 0.552
+consumer-fetch-manager-metrics:records-lag-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=9}        : 0.328
+consumer-fetch-manager-metrics:records-lag-max:{client-id=perf-consumer-client, topic=baseline-latency, partition=0}        : 203.000
+consumer-fetch-manager-metrics:records-lag-max:{client-id=perf-consumer-client, topic=baseline-latency, partition=1}        : 135.000
+consumer-fetch-manager-metrics:records-lag-max:{client-id=perf-consumer-client, topic=baseline-latency, partition=2}        : 170.000
+consumer-fetch-manager-metrics:records-lag-max:{client-id=perf-consumer-client, topic=baseline-latency, partition=3}        : 190.000
+consumer-fetch-manager-metrics:records-lag-max:{client-id=perf-consumer-client, topic=baseline-latency, partition=4}        : 168.000
+consumer-fetch-manager-metrics:records-lag-max:{client-id=perf-consumer-client, topic=baseline-latency, partition=5}        : 195.000
+consumer-fetch-manager-metrics:records-lag-max:{client-id=perf-consumer-client, topic=baseline-latency, partition=6}        : 198.000
+consumer-fetch-manager-metrics:records-lag-max:{client-id=perf-consumer-client, topic=baseline-latency, partition=7}        : 197.000
+consumer-fetch-manager-metrics:records-lag-max:{client-id=perf-consumer-client, topic=baseline-latency, partition=8}        : 204.000
+consumer-fetch-manager-metrics:records-lag-max:{client-id=perf-consumer-client, topic=baseline-latency, partition=9}        : 114.000
+consumer-fetch-manager-metrics:records-lag-max:{client-id=perf-consumer-client}                                             : 204.000
+consumer-fetch-manager-metrics:records-lag:{client-id=perf-consumer-client, topic=baseline-latency, partition=0}            : 0.000
+consumer-fetch-manager-metrics:records-lag:{client-id=perf-consumer-client, topic=baseline-latency, partition=1}            : 0.000
+consumer-fetch-manager-metrics:records-lag:{client-id=perf-consumer-client, topic=baseline-latency, partition=2}            : 0.000
+consumer-fetch-manager-metrics:records-lag:{client-id=perf-consumer-client, topic=baseline-latency, partition=3}            : 0.000
+consumer-fetch-manager-metrics:records-lag:{client-id=perf-consumer-client, topic=baseline-latency, partition=4}            : 0.000
+consumer-fetch-manager-metrics:records-lag:{client-id=perf-consumer-client, topic=baseline-latency, partition=5}            : 0.000
+consumer-fetch-manager-metrics:records-lag:{client-id=perf-consumer-client, topic=baseline-latency, partition=6}            : 0.000
+consumer-fetch-manager-metrics:records-lag:{client-id=perf-consumer-client, topic=baseline-latency, partition=7}            : 0.000
+consumer-fetch-manager-metrics:records-lag:{client-id=perf-consumer-client, topic=baseline-latency, partition=8}            : 0.000
+consumer-fetch-manager-metrics:records-lag:{client-id=perf-consumer-client, topic=baseline-latency, partition=9}            : 0.000
+consumer-fetch-manager-metrics:records-lead-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=0}       : 1164799.609
+consumer-fetch-manager-metrics:records-lead-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=1}       : 1148853.702
+consumer-fetch-manager-metrics:records-lead-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=2}       : 1141308.947
+consumer-fetch-manager-metrics:records-lead-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=3}       : 1129754.031
+consumer-fetch-manager-metrics:records-lead-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=4}       : 1143153.195
+consumer-fetch-manager-metrics:records-lead-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=5}       : 1155253.540
+consumer-fetch-manager-metrics:records-lead-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=6}       : 1144431.277
+consumer-fetch-manager-metrics:records-lead-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=7}       : 1149359.828
+consumer-fetch-manager-metrics:records-lead-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=8}       : 1152053.197
+consumer-fetch-manager-metrics:records-lead-avg:{client-id=perf-consumer-client, topic=baseline-latency, partition=9}       : 1137705.446
+consumer-fetch-manager-metrics:records-lead-min:{client-id=perf-consumer-client, topic=baseline-latency, partition=0}       : 1112765.000
+consumer-fetch-manager-metrics:records-lead-min:{client-id=perf-consumer-client, topic=baseline-latency, partition=1}       : 1097003.000
+consumer-fetch-manager-metrics:records-lead-min:{client-id=perf-consumer-client, topic=baseline-latency, partition=2}       : 1088752.000
+consumer-fetch-manager-metrics:records-lead-min:{client-id=perf-consumer-client, topic=baseline-latency, partition=3}       : 1077935.000
+consumer-fetch-manager-metrics:records-lead-min:{client-id=perf-consumer-client, topic=baseline-latency, partition=4}       : 1090239.000
+consumer-fetch-manager-metrics:records-lead-min:{client-id=perf-consumer-client, topic=baseline-latency, partition=5}       : 1101570.000
+consumer-fetch-manager-metrics:records-lead-min:{client-id=perf-consumer-client, topic=baseline-latency, partition=6}       : 1092551.000
+consumer-fetch-manager-metrics:records-lead-min:{client-id=perf-consumer-client, topic=baseline-latency, partition=7}       : 1098508.000
+consumer-fetch-manager-metrics:records-lead-min:{client-id=perf-consumer-client, topic=baseline-latency, partition=8}       : 1098985.000
+consumer-fetch-manager-metrics:records-lead-min:{client-id=perf-consumer-client, topic=baseline-latency, partition=9}       : 1083873.000
+consumer-fetch-manager-metrics:records-lead-min:{client-id=perf-consumer-client}                                            : 1077208.000
+consumer-fetch-manager-metrics:records-lead:{client-id=perf-consumer-client, topic=baseline-latency, partition=0}           : 1217629.000
+consumer-fetch-manager-metrics:records-lead:{client-id=perf-consumer-client, topic=baseline-latency, partition=1}           : 1202683.000
+consumer-fetch-manager-metrics:records-lead:{client-id=perf-consumer-client, topic=baseline-latency, partition=2}           : 1194561.000
+consumer-fetch-manager-metrics:records-lead:{client-id=perf-consumer-client, topic=baseline-latency, partition=3}           : 1182466.000
+consumer-fetch-manager-metrics:records-lead:{client-id=perf-consumer-client, topic=baseline-latency, partition=4}           : 1197083.000
+consumer-fetch-manager-metrics:records-lead:{client-id=perf-consumer-client, topic=baseline-latency, partition=5}           : 1209642.000
+consumer-fetch-manager-metrics:records-lead:{client-id=perf-consumer-client, topic=baseline-latency, partition=6}           : 1196557.000
+consumer-fetch-manager-metrics:records-lead:{client-id=perf-consumer-client, topic=baseline-latency, partition=7}           : 1200689.000
+consumer-fetch-manager-metrics:records-lead:{client-id=perf-consumer-client, topic=baseline-latency, partition=8}           : 1206512.000
+consumer-fetch-manager-metrics:records-lead:{client-id=perf-consumer-client, topic=baseline-latency, partition=9}           : 1192178.000
+consumer-fetch-manager-metrics:records-per-request-avg:{client-id=perf-consumer-client, topic=baseline-latency}             : 20.600
+consumer-fetch-manager-metrics:records-per-request-avg:{client-id=perf-consumer-client}                                     : 20.600
+kafka-metrics-count:count:{client-id=perf-consumer-client}                                                                  : 124.000
