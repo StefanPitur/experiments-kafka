@@ -1,0 +1,22 @@
+{
+  "class": "org.apache.kafka.trogdor.workload.ProduceBenchSpec",
+  "startMs": 0,
+  "durationMs": 600000,
+  "producerNode": "producer-1",
+  "bootstrapServers": "192.168.0.101:9092",
+  "targetMessagesPerSec": 20000,
+  "keyGenerator":   { "type": "sequential", "size": 4  },
+  "valueGenerator": { "type": "constant",   "size": 512 },
+  "activeTopics":   { "baseline_latency":  {
+    "numPartitions": 10,
+    "replicationFactor": 1
+  } },
+  "producerConf": {
+    "acks": "1",
+    "linger.ms": "0",
+    "batch.size": "16384",
+    "compression.type": "none",
+    "max.in.flight.requests.per.connection": "1",
+    "retries": "0"
+  }
+}

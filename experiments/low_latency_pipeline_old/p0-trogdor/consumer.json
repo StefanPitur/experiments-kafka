@@ -1,0 +1,16 @@
+{
+  "class": "org.apache.kafka.trogdor.workload.ConsumeBenchSpec",
+  "startMs": 0,
+  "durationMs": 600000,
+  "consumerNode": "c1",
+  "bootstrapServers": "192.168.0.101:9092",
+  "consumerGroup": "lat-test",
+  "activeTopics": ["baseline_latency"],
+  "consumerConf": {
+    "fetch.min.bytes": "1",
+    "fetch.max.wait.ms": "10",
+    "max.poll.records": "100",
+    "enable.auto.commit": "false",
+    "auto.offset.reset": "earliest"
+  }
+}

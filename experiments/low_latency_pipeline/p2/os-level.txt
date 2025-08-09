@@ -1,7 +1,0 @@
-sudo sysctl -w net.core.rmem_max=268435456
-sudo sysctl -w net.core.wmem_max=268435456
-sudo sysctl -w net.ipv4.tcp_adv_win_scale=2
-sudo sysctl -w net.ipv4.tcp_app_win=31
-sudo sysctl -w vm.dirty_bytes=268435456
-sudo sysctl -w vm.dirty_background_bytes=134217728
-sudo sysctl -p

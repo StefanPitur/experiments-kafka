@@ -1,14 +1,53 @@
-import pandas as pd, numpy as np
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 
-df = pd.read_csv("experiments/low_latency_pipeline/p0/e2e-latencies.csv")
+# --- 1) Load your data ---
+# Change these to match your file & column name
+csv_path = "experiments/low_latency_pipeline_new/p0/logs/cons-81147-1.csv"
+latency_col = "latency_ms"   # e.g. "latency_ms" or "latency"
 
-offset_us = df.loc[df["lat_ms"] < 0, "lat_ms"].mean() * 1000
-print(f"Estimated clock offset: {offset_us:.1f} µs")
+df = pd.read_csv(csv_path, skiprows=range(1, 100_001))
+s = pd.to_numeric(df[latency_col], errors="coerce").dropna()
+s = s[s >= 0]  # keep non-negative latencies
 
-df["lat_ms_adj"] = df["lat_ms"] + offset_us/1000.0
+# --- 2) Compute percentiles ---
+qs = [0.95, 0.99]
+q_vals = s.quantile(qs)
+print(q_vals)  # p95/p99 values
 
-df["lat_ms_adj"] = df["lat_ms_adj"].clip(lower=0)
+# --- 3a) Histogram with percentile markers ---
+plt.figure()
+plt.hist(s, bins=50)
+for q, v in q_vals.items():
+    plt.axvline(v, linestyle="--", color="red")
+    plt.text(v, plt.ylim()[1]*0.9, f"p{int(q*100)}={v:.2f}", rotation=90, va="top", ha="right", color="red")
+plt.xlabel("Latency")
+plt.ylabel("Count")
+plt.title("Latency Histogram with p95/p99")
+plt.tight_layout()
+plt.show()
 
-df.to_csv("adjusted-e2e-latencies.csv")
+# --- 3b) ECDF (good for seeing the whole distribution) ---
+x = np.sort(s.values)
+y = np.arange(1, len(x) + 1) / len(x)
 
-print(df["lat_ms_adj"].quantile([0.50, 0.95, 0.99]))
+plt.figure()
+plt.plot(x, y, drawstyle="steps-post")
+for q, v in q_vals.items():
+    plt.axvline(v, linestyle="--", color="red")
+    plt.text(v, 0.02, f"p{int(q*100)}={v:.2f}", rotation=90, va="bottom", ha="right", color="red")
+plt.xlabel("Latency")
+plt.ylabel("Cumulative probability")
+plt.title("Latency ECDF with p95/p99")
+plt.tight_layout()
+plt.show()
+
+# --- 3c) Bar chart of the three percentiles ---
+plt.figure()
+labels = [f"p{int(q*100)}" for q in qs]
+plt.bar(labels, [q_vals.loc[q] for q in qs])
+plt.ylabel("Latency")
+plt.title("Latency percentiles")
+plt.tight_layout()
+plt.show()
