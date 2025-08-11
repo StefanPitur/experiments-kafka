@@ -14,6 +14,7 @@ services:
       - "--storage.tsdb.path=/prometheus"
       - "--web.enable-admin-api"
       - "--storage.tsdb.max-block-duration=45m"
+      - "--storage.tsdb.retention.time=90d"
 
   grafana:
     image: grafana/grafana-oss:latest
