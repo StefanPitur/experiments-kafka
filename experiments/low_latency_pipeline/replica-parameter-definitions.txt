@@ -1,0 +1,26 @@
+- replica.fetch.max.bytes = per-partition fetch target
+    How many bytes a follower _tries_ to fetch for each partition in one request.
+    Not a hard cap; if the first batch is bigger, it's still returned so progress
+    can be made. Keep this >= your largest allowed message/batch (message.max.bytes).
+
+
+- replica.fetch.min.bytes = lower bound before replying
+    Minimum bytes the leader aims to accumulate for a follower fetch before sending
+    a response; otherwise it waits up to `replica.fetch.wait.max.ms`.
+    Default 1; useful for shaping long-poll cadence.
+
+- replica.fetch.wait.max.ms = long-poll timeout
+    Max time the leader will hold a follower's fetch waiting for data.
+    Keep it < `replica.lag.time.max.ms` to avoid ISR churn. Default 500ms.
+
+- num.replica.fetchers = parallelism of follower fetch threads
+    Number of threads a broker uses to replicate from leaders. More threads =>
+    more I/O parallelism when you have many partitions; doesn't change long-poll
+    timing. Default 1.
+
+- replica.socket.timeout.ms = follower <-> leader socket timeout
+    Network timeout used by replica fetchers. Should be >= `request.fetch.wait.max.ms`.
+    Default 30s.
+
+- socket.request.max.bytes - broker-wide request size guardrail
+    Largest request the broker will accept on the socket server - protects memory; typically 100 MiB

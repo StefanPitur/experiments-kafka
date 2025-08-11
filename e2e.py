@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # --- 1) Load your data ---
 # Change these to match your file & column name
-csv_path = "experiments/low_latency_pipeline_new/p0/logs/cons-81147-1.csv"
+csv_path = "experiments/low_latency_pipeline/p1/exp-2a/logs/cons-91365-3.csv"
 latency_col = "latency_ms"   # e.g. "latency_ms" or "latency"
 
 df = pd.read_csv(csv_path, skiprows=range(1, 100_001))
@@ -12,7 +12,7 @@ s = pd.to_numeric(df[latency_col], errors="coerce").dropna()
 s = s[s >= 0]  # keep non-negative latencies
 
 # --- 2) Compute percentiles ---
-qs = [0.95, 0.99]
+qs = [0.50, 0.95, 0.99]
 q_vals = s.quantile(qs)
 print(q_vals)  # p95/p99 values
 

@@ -1,0 +1,22 @@
+ok - i ll try that next, but first I have a question.
+
+let's assume what you are saying is correct and that the producer only has a capacity of 10 req/s. 
+isn't the producer throttling itself? doesn't the produce wait for messages to be delivered before 
+he buffers new requests? it would seem like the producer just buffers in the RecordAccumulator at 
+full speed without being able to deliver, correct?
+
+
+
+Short answer: yes—your intuition is right.
+	•	The Kafka producer is async. send() enqueues to the RecordAccumulator and returns immediately. It does not wait for delivery unless it runs out of buffer.
+	•	A background Sender thread drains batches and keeps up to max.in.flight.requests.per.connection in flight per broker connection. When those are full, extra records just queue in the accumulator.
+	•	The only hard backpressure is buffer.memory: if it fills, send() blocks (up to max.block.ms) or throws BufferExhaustedException. Otherwise the app can keep enqueueing.
+	•	As acks take ~500 ms and in-flight is capped, the queue grows; the oldest batches sit long enough that delivery.timeout.ms is hit and they expire → the exact timeouts you’re seeing.
+
+If you want to see this on the producer, watch:
+	•	requests-in-flight (should sit near the cap),
+	•	record-queue-time-avg/max (should climb),
+	•	batch-size-avg and records-per-request-avg (likely small with linger.ms=0),
+	•	buffer-available-bytes / buffer wait metrics (to confirm you’re not buffer-exhausted).
+
+Bigger batches (batch.size up, add linger.ms) = fewer requests/sec → fits within the in-flight/ack cadence and stops the expiries.
